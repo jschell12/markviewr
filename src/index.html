@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: file:; script-src 'self';" />
+  <title>MarkViewr</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar">
+      <div id="sidebar-header">
+        <button id="open-folder-btn" title="Open Folder (Cmd+O)">📂 Open Folder</button>
+      </div>
+      <div id="tree-container">
+        <div id="empty-state">
+          <p>No folder open</p>
+          <p class="hint">Open a repository folder to view its Markdown files</p>
+        </div>
+        <ul id="file-tree"></ul>
+      </div>
+    </aside>
+    <main id="content">
+      <div id="welcome">
+        <h1>MarkViewr</h1>
+        <p>Open a folder to browse its Markdown files.</p>
+        <p class="shortcut">⌘O / Ctrl+O</p>
+      </div>
+      <div id="markdown-header" class="hidden">
+        <span id="file-path-display"></span>
+      </div>
+      <article id="markdown-body"></article>
+    </main>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>

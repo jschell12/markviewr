@@ -1,0 +1,19 @@
+{
+  "name": "markviewr",
+  "version": "1.0.0",
+  "description": "A standalone Markdown viewer for repositories — shows only .md files in their directory structure",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "keywords": ["markdown", "viewer", "electron", "repository"],
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^15.0.0",
+    "highlight.js": "^11.11.0"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0"
+  }
+}
