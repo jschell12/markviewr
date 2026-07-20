@@ -7,7 +7,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder --mac"
+    "build": "electron-builder --mac",
+    "build:release": "electron-builder --mac --arm64 --x64 --publish never"
   },
   "keywords": [
     "markdown",
@@ -30,7 +31,10 @@
     "mac": {
       "category": "public.app-category.developer-tools",
       "icon": "assets/icon.icns",
-      "target": "dir"
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "files": [
       "src/**/*",
