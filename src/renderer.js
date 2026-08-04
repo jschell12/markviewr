@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const li = document.createElement('li');
 
       if (entry.type === 'directory') {
-        li.className = 'tree-dir';
+        li.className = 'tree-dir collapsed';
         const item = document.createElement('div');
         item.className = 'tree-item';
         item.innerHTML = `<span class="chevron">▼</span><span class="icon">📁</span><span>${escapeHtml(entry.name)}</span>`;
