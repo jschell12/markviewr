@@ -103,11 +103,6 @@ function scanMarkdownFiles(dirPath) {
 
   try {
     const items = fs.readdirSync(dirPath, { withFileTypes: true });
-    items.sort((a, b) => {
-      if (a.isDirectory() && !b.isDirectory()) return -1;
-      if (!a.isDirectory() && b.isDirectory()) return 1;
-      return a.name.localeCompare(b.name);
-    });
 
     for (const item of items) {
       if (item.name.startsWith('.')) continue;
@@ -126,13 +121,28 @@ function scanMarkdownFiles(dirPath) {
           });
         }
       } else if (item.name.toLowerCase().endsWith('.md')) {
+        let mtime = 0;
+        try {
+          mtime = fs.statSync(fullPath).mtimeMs;
+        } catch {
+          // leave mtime at 0 for unreadable files
+        }
         entries.push({
           name: item.name,
           path: fullPath,
           type: 'file',
+          mtime,
         });
       }
     }
+
+    // Directories first (alphabetical), then files by last-updated descending
+    entries.sort((a, b) => {
+      if (a.type === 'directory' && b.type !== 'directory') return -1;
+      if (a.type !== 'directory' && b.type === 'directory') return 1;
+      if (a.type === 'directory') return a.name.localeCompare(b.name);
+      return b.mtime - a.mtime;
+    });
   } catch {
     // skip unreadable directories
   }

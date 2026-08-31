@@ -20,6 +20,46 @@ document.addEventListener('DOMContentLoaded', () => {
   const findPrev = document.getElementById('find-prev');
   const findNext = document.getElementById('find-next');
   const findClose = document.getElementById('find-close');
+  const sidebar = document.getElementById('sidebar');
+  const divider = document.getElementById('divider');
+
+  // ── Sidebar resize ──
+
+  const SIDEBAR_MIN = 160;
+  const SIDEBAR_DEFAULT = 280;
+
+  function setSidebarWidth(width) {
+    const max = Math.floor(window.innerWidth * 0.7);
+    const clamped = Math.max(SIDEBAR_MIN, Math.min(max, width));
+    sidebar.style.width = clamped + 'px';
+    return clamped;
+  }
+
+  const savedWidth = parseInt(localStorage.getItem('sidebarWidth'), 10);
+  if (savedWidth) setSidebarWidth(savedWidth);
+
+  divider.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    divider.classList.add('dragging');
+    document.body.classList.add('resizing');
+
+    const onMove = (ev) => setSidebarWidth(ev.clientX);
+    const onUp = () => {
+      divider.classList.remove('dragging');
+      document.body.classList.remove('resizing');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      localStorage.setItem('sidebarWidth', parseInt(sidebar.style.width, 10));
+    };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+
+  divider.addEventListener('dblclick', () => {
+    setSidebarWidth(SIDEBAR_DEFAULT);
+    localStorage.setItem('sidebarWidth', SIDEBAR_DEFAULT);
+  });
 
   // ── Folder open ──
 
